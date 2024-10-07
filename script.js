@@ -45,11 +45,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Add click event listener to each button
         const addToCartButton = productCard.querySelector(".add-to-cart-btn");
+
+        // Register background sync when 'Add to Cart' is clicked
         addToCartButton.addEventListener("click", async () => {
-            var swRegistration = await navigator.serviceWorker.register("service.js");
-            swRegistration.sync.register("helloSync").then(function () {
-                console.log("helloSync success [script.js]");
-            });
+            try {
+                var swRegistration = await navigator.serviceWorker.register("service.js");
+                swRegistration.sync.register("helloSync").then(function () {
+                    console.log("helloSync success [script.js]");
+                });
+            } catch (error) {
+                console.error("Error registering sync: ", error);
+            }
         });
 
         return productCard;
